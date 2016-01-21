@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=0.01
+VERSION=0.02
 
 set -o nounset
 
@@ -9,12 +9,12 @@ COLS=${COLUMNS:-${COLS##* }}
 
 echo "mkthrowie.sh version $VERSION"
 echo "-------------------------"
-echo "              vvvvvv--- copy throwie below ---vvvvvv"
-echo "stty -echo;base64 -d<<_EOF|tar xzv;stty echo"
+echo "              vvvvvv--- start copy throwie below ---vvvvvv"
+echo "base64 -d<<_EOF|tar xzv"
 [[ $# -gt 0 ]] && {
 	GZIP=-9 tar --numeric-owner --portability -czf - -- $@ | base64 -w $COLS
 } || {
 	GZIP=-9 tar --numeric-owner --portability -czf - -- $0 | base64 -w $COLS
 }
 echo "_EOF"
-echo "              ^^^^^^--- copy throwie above ---^^^^^^"
+echo "              ^^^^^^--- end copy throwie above ---^^^^^^"
