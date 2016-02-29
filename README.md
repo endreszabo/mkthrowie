@@ -10,7 +10,7 @@ It creates a gzipped and base64 encoded tar file to the stdout that you can copy
 
 ```
 $ ./mkthrowie.sh  
-mkthrowie.sh version 0.01
+mkthrowie.sh version 0.02
 -------------------------
               vvvvvv--- copy throwie below ---vvvvvv
 stty -echo;base64 -d<<_EOF|tar xzv;stty echo
@@ -21,3 +21,7 @@ AAAAAAAAAAAAAB2zAfNJn0cACgAAA==
 _EOF
               ^^^^^^--- copy throwie above ---^^^^^^
 ```
+
+## Xclip support
+
+mkthrowie.sh will check if it can use a working xclip binary. If it can, it will pipe its output to xclip to copy it to the default clipboard. If xclip is not available it will print the base64ed output between 'cut' markers.
