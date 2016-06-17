@@ -12,13 +12,13 @@ echo -n | xclip -i && XCLIP=1 || XCLIP=0
 echo "mkthrowie.sh version $VERSION"
 echo "-------------------------"
 {
-echo "base64 -d<<_EOF|tar xzv"
+echo "base64 -d<<_|tar xzv"
 	[[ $# -gt 0 ]] && {
-		GZIP=-9 tar --numeric-owner --portability -czf - -- $@ | base64 -w $COLS
+		tar --numeric-owner -cf - -- $@ | gzip -9 | base64 -w $COLS
 	} || {
-		GZIP=-9 tar --numeric-owner --portability -czf - -- $0 | base64 -w $COLS
+		tar --numeric-owner -cf - -- $0 | gzip -9 | base64 -w $COLS
 	}
-echo "_EOF"
+echo "_"
 } | {
 	[[ $XCLIP == 1 ]] && {
 		xclip -i
