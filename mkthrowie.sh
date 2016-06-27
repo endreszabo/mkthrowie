@@ -1,18 +1,18 @@
 #!/bin/bash
+#Endre Szabo, 2016 - https://github.com/endreszabo/mkthrowie/
 
-VERSION=0.02
+V=0.03
 
-set -o nounset
-set -o errexit
+set -ue
 
 COLS=$(stty size)
-COLS=${COLUMNS:-${COLS##* }}
-echo -n | xclip -i && XCLIP=1 || XCLIP=0
+COLS=$((${COLUMNS:-${COLS##* }}-3))
+command -v xclip && XCLIP=1 || XCLIP=0
 
-echo "mkthrowie.sh version $VERSION"
+echo "mkthrowie.sh version $V"
 echo "-------------------------"
 {
-echo "base64 -d<<_|tar xzv"
+	echo "base64 -d<<_|tar xzv"
 	[[ $# -gt 0 ]] && {
 		tar --numeric-owner -cf - -- $@ | gzip -9 | base64 -w $COLS
 	} || {
@@ -24,9 +24,9 @@ echo "_"
 		xclip -i
 		echo 'Copied onto clipboard.'
 	} || {
-		echo "              vvvvvv--- start copy throwie below ---vvvvvv"
+		echo "#----- BEGIN THROWIE DATA BLOCK -----"
 		cat
-		echo "              ^^^^^^--- end copy throwie above ---^^^^^^"
+		echo "#----- END THROWIE DATA BLOCK -----"
 	}
 }
 
